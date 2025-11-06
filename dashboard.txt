@@ -1,0 +1,91 @@
+Plano de Construção do Dashboard em Streamlit
+
+## Objetivo do Dashboard
+
+Apresentar uma análise completa e interativa do mercado de agrotóxicos registrados no Brasil, utilizando uma aplicação web construída com Streamlit. O dashboard deve guiar o usuário de uma visão macro para os detalhes específicos de forma intuitiva.
+
+---
+
+## Estrutura em Abas (Tabs)
+
+A aplicação será organizada em quatro abas principais, cada uma correspondendo a uma página de análise.
+
+#### Aba 1: Visão Geral do Mercado (O "Big Picture")
+
+**Objetivo:** Fornecer um resumo executivo do cenário atual do mercado.
+
+1.  **Componente: Indicadores Chave (KPIs)**
+    *   **Streamlit:** `st.metric`
+    *   **Métricas (Queries no BigQuery):**
+        *   `COUNT(DISTINCT nr_registro)` -> Título: "Total de Produtos Registrados"
+        *   `COUNT(DISTINCT titular_de_registro)` -> Título: "Total de Empresas Titulares"
+        *   `COUNT(DISTINCT ingrediente_ativo)` -> Título: "Total de Ingredientes Ativos"
+
+2.  **Gráfico: Distribuição de Produtos por Classe**
+    *   **Plotly:** `px.pie` (Gráfico de Pizza com furo central)
+    *   **Dimensão:** `classe`
+    *   **Métrica:** `COUNT(nr_registro)`
+    *   **Título Sugerido:** "Distribuição de Produtos por Classe"
+
+3.  **Gráfico: Perfil de Risco Ambiental**
+    *   **Plotly:** `px.bar` (Gráfico de Barras Horizontais)
+    *   **Dimensão:** `classe_ambiental`
+    *   **Métrica:** `COUNT(nr_registro)`
+    *   **Título Sugerido:** "Distribuição de Produtos por Classe Ambiental"
+
+---
+
+#### Aba 2: Análise de Empresas (Quem são os "Players"?)
+
+**Objetivo:** Identificar os principais competidores e analisar seus portfólios.
+
+1.  **Componente: Ranking das Top 10 Empresas**
+    *   **Streamlit:** `st.dataframe` para exibir a tabela.
+    *   **Plotly:** `px.bar` para o gráfico de barras.
+    *   **Dimensão:** `titular_de_registro`
+    *   **Métrica:** `COUNT(nr_registro)`
+    *   **Título Sugerido:** "Top 10 Empresas por Nº de Produtos"
+
+2.  **Gráfico: Estratégia de Portfólio das Top 5 Empresas**
+    *   **Plotly:** `px.bar` (Gráfico de Barras Empilhadas)
+    *   **Dimensão (Eixo X):** `titular_de_registro` (filtrar para as 5 maiores).
+    *   **Dimensão de Detalhamento (Cor):** `classe`
+    *   **Métrica:** `COUNT(nr_registro)`
+    *   **Título Sugerido:** "Especialização de Portfólio das Top 5 Empresas"
+
+---
+
+#### Aba 3: Produtos e Ingredientes
+
+**Objetivo:** Explorar a composição técnica e aplicação dos produtos.
+
+1.  **Gráfico: Ingredientes Ativos Mais Comuns**
+    *   **Plotly:** `px.bar`
+    *   **Dimensão:** `ingrediente_ativo`
+    *   **Métrica:** `COUNT(nr_registro)`
+    *   **Título Sugerido:** "Principais Ingredientes Ativos"
+
+2.  **Gráfico: Mercados-Alvo (Cultura & Praga)**
+    *   **Plotly:** `px.density_heatmap` (Mapa de Calor)
+    *   **Dimensão X:** `cultura`
+    *   **Dimensão Y:** `praga_nome_comum`
+    *   **Métrica (Cor):** `COUNT(nr_registro)`
+    *   **Título Sugerido:** "Concentração de Soluções por Cultura e Praga"
+
+---
+
+#### Aba 4: Geografia e Cadeia de Suprimentos
+
+**Objetivo:** Entender a origem dos produtos e a estrutura da cadeia de valor.
+
+1.  **Gráfico: Origem das Empresas**
+    *   **Plotly:** `px.choropleth` (Mapa Coroplético)
+    *   **Dimensão (Localização):** `paises`
+    *   **Métrica (Cor):** `COUNT(DISTINCT titular_de_registro)`
+    *   **Título Sugerido:** "Distribuição Geográfica das Empresas"
+
+2.  **Gráfico: Estrutura da Cadeia de Valor**
+    *   **Plotly:** `px.bar`
+    *   **Dimensão:** `tipos`
+    *   **Métrica:** `COUNT(nr_registro)`
+    *   **Título Sugerido:** "Frequência por Tipo na Cadeia de Produção"

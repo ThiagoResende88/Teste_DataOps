@@ -1,44 +1,123 @@
-# Análise de Dados Agrofit - Produtos Formulados
+# 🌿 Agrofit Dashboard - Análise de Dados via BigQuery e Streamlit
 
-## Visão Geral
+## 📊 Visão Geral
+Este projeto realiza a análise e visualização interativa da base pública **Agrofit - Produtos Formulados**, disponibilizada pelo Governo Federal do Brasil.  
+A proposta faz parte de um **Case Técnico para a vaga de DevOps/DataOps**, com foco em exploração, tratamento e visualização de dados reais no ambiente GCP (Google Cloud Platform).
 
-Este projeto tem como objetivo analisar a base de dados pública Agrofit - Produtos Formulados, que contém registros de agrotóxicos autorizados no Brasil. O trabalho envolve o tratamento, enriquecimento e exploração dos dados para gerar insights estratégicos.
+A nova versão substitui o antigo dashboard em Power BI / Looker Studio por uma **aplicação interativa em Streamlit**, conectada diretamente ao **BigQuery** para consultas dinâmicas e escaláveis.
 
-## Fonte dos Dados
+---
 
-A base de dados pode ser baixada no seguinte link:
-[https://dados.gov.br/dados/conjuntos-dados/sistema-de-agrotoxicos-fitossanitarios-agrofit](https://dados.gov.br/dados/conjuntos-dados/sistema-de-agrotoxicos-fitossanitarios-agrofit)
+## 🌐 Fonte dos Dados
+**Base oficial:** [Agrofit - Produtos Formulados (dados.gov.br)](https://dados.gov.br/dados/conjuntos-dados/sistema-de-agrotoxicos-fitossanitarios-agrofit)  
+**Armazenamento:** Google BigQuery  
+**Tabela:** `authentic-codex-477414-v4.Agrofit_data.tabela_agrofit_csv`
 
-## Requisitos do Projeto
+---
 
-- **Código em Python:** Para o tratamento e enriquecimento dos dados.
-- **Dashboard no Google Looker Studio:** Com visualizações e insights gerados a partir da análise.
-- **Apresentação em PowerPoint:** Sintetizando o processo de tratamento de dados e os principais resultados.
+## ⚙️ Requisitos do Projeto
 
-## Estrutura do Projeto
+- **Python:** 3.10 ou superior  
+- **Bibliotecas:**
+  ```bash
+  pip install streamlit google-cloud-bigquery plotly pandas db-dtypes "numpy<2"
+  ```
 
-- `process_data.py`: Script Python para limpeza e pré-processamento dos dados.
-- `analyze_data.py`: Script Python para análise exploratória dos dados e geração de insights.
-- `.gemini`: Documentação detalhada do processo de limpeza de dados e insights.
+Credenciais GCP: arquivo gcp_credentials.json com permissões:
 
-## Como Executar
+- BigQuery Data Viewer
+- BigQuery Job User
 
-1.  **Pré-requisitos:** Certifique-se de ter Python 3 e as bibliotecas `pandas` instaladas.
-    ```bash
-    pip install pandas
-    ```
-2. **Baixar os dados:** Baixe o arquivo `agrofitprodutosformulados.csv` da seção "Fonte dos Dados" e coloque-o na raiz do projeto.
-3.  **Processar os dados:** Execute o script de processamento de dados.
-    ```bash
-    python3 process_data.py
-    ```
-    Isso irá gerar o arquivo `agrofit_cleaned.csv`.
-4.  **Analisar os dados:** Execute o script de análise de dados para obter insights e sugestões de visualização.
-    ```bash
-    python3 analyze_data.py
-    ```
+**Dataset**: authentic-codex-477414-v4.Agrofit_data
 
-## Próximos Passos
+```
+🧩 Estrutura do Projeto
+bash
+Copiar código
+agrofit_dashboard/
+│
+├── dashboard_agrofit.py      # Aplicação principal Streamlit
+├── gcp_credentials.json      # Chave de autenticação da service account
+├── requirements.txt          # Dependências do projeto
+├── README.md                 # Documentação principal do projeto
+└── project_context.txt       # Histórico técnico e decisões do projeto
+```
 
-- Desenvolver o dashboard no Google Looker Studio utilizando o arquivo `agrofit_cleaned.csv`.
-- Criar a apresentação em PowerPoint com base nos insights gerados.
+##🚀 Como Executar
+Clone o projeto:
+
+```bash
+Copiar código
+git clone <repo_url>
+cd agrofit_dashboard
+```
+
+###(Opcional) Crie o ambiente virtual:
+
+```bash
+Copiar código
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Instale as dependências:
+
+```bash
+Copiar código
+pip install -r requirements.txt
+```
+
+####Certifique-se de que o arquivo gcp_credentials.json está na pasta raiz.
+
+Execute o dashboard:
+
+```bash
+Copiar código
+streamlit run dashboard_agrofit.py
+Acesse no navegador: http://localhost:8501
+```
+
+```
+Aba	Objetivo	Principais Visualizações
+Visão Geral do Mercado	KPIs gerais e panorama dos registros ativos.	Scorecards, gráfico de pizza (classe), barras (risco ambiental).
+Análise de Empresas	Identificar líderes de mercado e portfólios.	Tabela Top 10, barras empilhadas das Top 5 empresas.
+Produtos e Ingredientes	Explorar a composição técnica e aplicação.	Barras de ingredientes, heatmap de cultura x praga.
+Geografia e Cadeia de Suprimentos	Mapa de origem das empresas e atores.	Mapa coroplético, barras por tipo na cadeia.
+```
+
+##🔐 Autenticação GCP
+O acesso ao BigQuery é realizado via Service Account com credenciais locais:
+
+```python
+Copiar código
+client = bigquery.Client.from_service_account_json("gcp_credentials.json")
+📄 Como criar a credencial:
+Vá para o console IAM do Google Cloud:
+https://console.cloud.google.com/iam-admin/serviceaccounts
+```
+
+####Crie uma nova conta de serviço com nome streamlit-dashboard.
+
+Atribua as funções:
+
+- BigQuery Data Viewer
+- BigQuery Job User
+
+Gere uma chave JSON, renomeie para gcp_credentials.json e mova para a raiz do projeto.
+
+---
+
+##🔄 Próximos Passos
+- Normalizar campos aninhados do dataset Agrofit (ex: listas de culturas e pragas).
+- Implementar camada de limpeza automática no carregamento.
+- Adicionar parâmetros dinâmicos (filtros interativos por classe, empresa, país).
+- Publicar versão em Streamlit Cloud ou GCP App Engine.
+
+###🧑‍💻 Autor
+Thiago Dias Resende
+Desenvolvedor • Analista de Estratégia de Marketing • Professor
+Fatec-SP | 5º semestre de Desenvolvimento de Software Multiplataforma
+
+📧 Contato: thiagod.resende15@gmail.com
+
+📅 Última atualização: Novembro / 2025
