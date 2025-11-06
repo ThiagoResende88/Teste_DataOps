@@ -105,23 +105,6 @@ Atribua as funções:
 
 Gere uma chave JSON, renomeie para gcp_credentials.json e mova para a raiz do projeto.
 
----
-
-## 🔄 Próximos Passos
-- Normalizar campos aninhados do dataset Agrofit (ex: listas de culturas e pragas).
-- Implementar camada de limpeza automática no carregamento.
-- Adicionar parâmetros dinâmicos (filtros interativos por classe, empresa, país).
-- Publicar versão em Streamlit Cloud ou GCP App Engine.
-
-### 🧑‍💻 Autor
-Thiago Dias Resende
-Desenvolvedor • Analista de Estratégia de Marketing • Professor
-Fatec-SP | 5º semestre de Desenvolvimento de Software Multiplataforma
-
-📧 Contato: thiagod.resende15@gmail.com
-
-📅 Última atualização: Novembro / 2025
-
 ## 🐳 Executando com Docker
 
 Para facilitar a execução e o deploy, o projeto foi containerizado. Certifique-se de ter o Docker instalado e em execução.
@@ -143,3 +126,20 @@ docker run -p 8501:8501 -v </path/to/your/gcp_credentials.json>:/app/gcp_credent
 **3. Acesse o dashboard:**
 
 Abra seu navegador e acesse: `http://localhost:8501`
+
+---
+
+## 🔄 Próximos Passos
+- Normalizar campos aninhados do dataset Agrofit (ex: listas de culturas e pragas).
+- Implementar camada de limpeza automática no carregamento.
+- Adicionar parâmetros dinâmicos (filtros interativos por classe, empresa, país).
+- Publicar versão em Streamlit Cloud ou GCP App Engine.
+
+### 🧑‍💻 Autor
+Thiago Dias Resende
+Desenvolvedor • Analista de Estratégia de Marketing • Professor
+Fatec-SP | 5º semestre de Desenvolvimento de Software Multiplataforma
+
+📧 Contato: thiagod.resende15@gmail.com
+
+📅 Última atualização: Novembro / 2025
