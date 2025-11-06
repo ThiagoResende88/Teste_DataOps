@@ -30,8 +30,8 @@ Credenciais GCP: arquivo gcp_credentials.json com permissões:
 
 **Dataset**: authentic-codex-477414-v4.Agrofit_data
 
+## 🧩 Estrutura do Projeto
 ```
-🧩 Estrutura do Projeto
 bash
 Copiar código
 agrofit_dashboard/
@@ -43,7 +43,7 @@ agrofit_dashboard/
 └── project_context.txt       # Histórico técnico e decisões do projeto
 ```
 
-##🚀 Como Executar
+## 🚀 Como Executar
 Clone o projeto:
 
 ```bash
@@ -52,7 +52,7 @@ git clone <repo_url>
 cd agrofit_dashboard
 ```
 
-###(Opcional) Crie o ambiente virtual:
+### (Opcional) Crie o ambiente virtual:
 
 ```bash
 Copiar código
@@ -60,14 +60,14 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-Instale as dependências:
+#### Instale as dependências:
 
 ```bash
 Copiar código
 pip install -r requirements.txt
 ```
 
-####Certifique-se de que o arquivo gcp_credentials.json está na pasta raiz.
+#### Certifique-se de que o arquivo gcp_credentials.json está na pasta raiz.
 
 Execute o dashboard:
 
@@ -77,26 +77,26 @@ streamlit run dashboard_agrofit.py
 Acesse no navegador: http://localhost:8501
 ```
 
-```
-Aba	Objetivo	Principais Visualizações
-Visão Geral do Mercado	KPIs gerais e panorama dos registros ativos.	Scorecards, gráfico de pizza (classe), barras (risco ambiental).
-Análise de Empresas	Identificar líderes de mercado e portfólios.	Tabela Top 10, barras empilhadas das Top 5 empresas.
-Produtos e Ingredientes	Explorar a composição técnica e aplicação.	Barras de ingredientes, heatmap de cultura x praga.
-Geografia e Cadeia de Suprimentos	Mapa de origem das empresas e atores.	Mapa coroplético, barras por tipo na cadeia.
-```
+##### Aba	Objetivo	Principais Visualizações
+- Visão Geral do Mercado	KPIs gerais e panorama dos registros ativos.	Scorecards, gráfico de pizza (classe), barras (risco ambiental).
+- Análise de Empresas	Identificar líderes de mercado e portfólios.	Tabela Top 10, barras empilhadas das Top 5 empresas.
+- Produtos e Ingredientes	Explorar a composição técnica e aplicação.	Barras de ingredientes, heatmap de cultura x praga.
+- Geografia e Cadeia de Suprimentos	Mapa de origem das empresas e atores.	Mapa coroplético, barras por tipo na cadeia.
 
-##🔐 Autenticação GCP
+
+## 🔐 Autenticação GCP
 O acesso ao BigQuery é realizado via Service Account com credenciais locais:
 
 ```python
 Copiar código
 client = bigquery.Client.from_service_account_json("gcp_credentials.json")
-📄 Como criar a credencial:
-Vá para o console IAM do Google Cloud:
-https://console.cloud.google.com/iam-admin/serviceaccounts
 ```
 
-####Crie uma nova conta de serviço com nome streamlit-dashboard.
+### 📄 Como criar a credencial:
+Vá para o console IAM do Google Cloud:
+[https://console.cloud.google.com/iam-admin/serviceaccounts]
+
+#### Crie uma nova conta de serviço com nome streamlit-dashboard.
 
 Atribua as funções:
 
@@ -107,13 +107,13 @@ Gere uma chave JSON, renomeie para gcp_credentials.json e mova para a raiz do pr
 
 ---
 
-##🔄 Próximos Passos
+## 🔄 Próximos Passos
 - Normalizar campos aninhados do dataset Agrofit (ex: listas de culturas e pragas).
 - Implementar camada de limpeza automática no carregamento.
 - Adicionar parâmetros dinâmicos (filtros interativos por classe, empresa, país).
 - Publicar versão em Streamlit Cloud ou GCP App Engine.
 
-###🧑‍💻 Autor
+### 🧑‍💻 Autor
 Thiago Dias Resende
 Desenvolvedor • Analista de Estratégia de Marketing • Professor
 Fatec-SP | 5º semestre de Desenvolvimento de Software Multiplataforma
