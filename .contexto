@@ -1,0 +1,45 @@
+# Documentação do Projeto de Análise de Dados Agrofit
+
+## 1. Visão Geral do Projeto
+
+O objetivo deste projeto é realizar uma análise da base de dados pública Agrofit – Produtos Formulados. O processo envolve o tratamento e enriquecimento dos dados brutos, a análise exploratória para geração de insights e a proposição de visualizações para um dashboard em Google Looker Studio.
+
+## 2. Estrutura e Scripts do Projeto
+
+O projeto foi estruturado de forma modular, separando as responsabilidades de processamento e análise em dois scripts Python distintos para garantir maior organização, reutilização e facilidade de manutenção.
+
+### 2.1. `process_data.py` - O Script de Limpeza e Transformação (ETL)
+
+Este script é responsável por todo o processo de **Extração, Transformação e Carga (ETL)**. Sua única função é converter os dados brutos e complexos do arquivo `agrofitprodutosformulados.csv` em uma base de dados limpa, estruturada e pronta para análise, que é salva como `agrofit_cleaned.csv`.
+
+As etapas detalhadas que ele executa são:
+
+- **Carregamento dos Dados:** Utiliza a biblioteca `pandas` para carregar o CSV original, especificando o separador (`;`) e a codificação (`utf-8`).
+
+- **Padronização dos Nomes das Colunas:**
+    - **Ação:** Remove espaços extras, converte todos os nomes para letras minúsculas e substitui espaços por underscores (`_`).
+    - **Justificativa:** Esta padronização é crucial para evitar erros e facilitar a manipulação dos dados no código, tornando-o mais limpo e legível.
+
+- **Limpeza de Dados em Células de Texto:**
+    - **Ação:** Percorre todas as colunas de texto e remove espaços em branco no início e no fim de cada célula.
+    - **Justificativa:** Garante a consistência dos dados, evitando que um mesmo valor (ex: "Empresa A" e " Empresa A ") seja interpretado como duas categorias distintas durante a análise.
+
+- **Extração e Enriquecimento da Coluna `empresa_pais_tipo`:**
+    - **Ação:** Esta é a transformação mais importante do script. A coluna original `empresa_pais_tipo` é uma string complexa que armazena múltiplas informações. Uma função com expressões regulares (`regex`) foi criada para "quebrar" essa string e extrair três novas colunas:
+        1.  `empresas`: O nome de cada empresa associada.
+        2.  `paises`: O país de origem de cada empresa.
+        3.  `tipos`: O tipo de relação (ex: FORMULADOR, MANIPULADOR).
+    - **Justificativa:** Transformar uma única coluna complexa em três colunas atômicas e estruturadas é o que permite análises mais profundas, como a contagem de empresas por país ou a identificação dos principais players em cada etapa da cadeia de produção.
+
+### 2.2. `analyze_data.py` - O Script de Análise e Geração de Insights
+
+Este script atua como o "analista de dados" do projeto. Ele consome a base de dados já limpa (`agrofit_cleaned.csv`) e foca exclusivamente em extrair informações e conhecimento relevante.
+
+- **Análises Realizadas:**
+    - **Contagem de Produtos por Empresa:** Identifica as 10 empresas com mais produtos registrados.
+    - **Distribuição por Classe:** Mostra a quantidade de produtos em cada classe (Herbicida, Fungicida, etc.).
+    - **Distribuição por Classe Ambiental:** Agrupa os produtos por sua classificação de perigo ao meio ambiente.
+    - **Contagem de Produtos Orgânicos:** Verifica a quantidade de produtos marcados como orgânicos.
+
+- **Visualizações Propostas para o Google Looker Studio:**
+    - Com base nas análises, o script imprime uma lista de sugestões de gráficos para serem construídos no dashboard, servindo como um guia para a etapa de visualização de dados.
