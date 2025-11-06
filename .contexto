@@ -43,3 +43,15 @@ Este script atua como o "analista de dados" do projeto. Ele consome a base de da
 
 - **Visualizações Propostas para o Google Looker Studio:**
     - Com base nas análises, o script imprime uma lista de sugestões de gráficos para serem construídos no dashboard, servindo como um guia para a etapa de visualização de dados.
+
+### 2.3. Estratégia de Dados para o Dashboard (Google BigQuery e Looker Studio)
+
+Devido ao tamanho do arquivo `agrofit_cleaned.csv` (aproximadamente 600MB), o upload direto para o Google Looker Studio não é viável. A solução adotada, e uma prática recomendada na engenharia de dados para grandes volumes, é utilizar um Data Warehouse na nuvem.
+
+- **Ferramenta Escolhida:** Google BigQuery.
+    - **Motivo:** Integração nativa e eficiente com o Google Looker Studio, capacidade de processar grandes volumes de dados e um generoso nível gratuito.
+- **Processo:**
+    1.  **Upload do `agrofit_cleaned.csv` para o BigQuery:** O arquivo limpo é carregado para uma tabela dentro de um dataset específico no Google BigQuery.
+    2.  **Conexão do Looker Studio:** O Google Looker Studio é então conectado diretamente a esta tabela no BigQuery. Isso permite que o Looker Studio consulte os dados em tempo real, sem a necessidade de armazená-los localmente ou de fazer uploads de arquivos grandes.
+
+Esta abordagem garante escalabilidade, performance e a capacidade de trabalhar com datasets que excedem os limites de upload direto das ferramentas de BI.
