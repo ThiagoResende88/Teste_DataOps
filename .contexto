@@ -39,3 +39,21 @@ O BigQuery continua sendo a peça central para o armazenamento de dados, mas seu
 ### 2.3. Scripts Anteriores (`process_data.py` e `analyze_data.py`)
 
 Os scripts `process_data.py` e `analyze_data.py` faziam parte da arquitetura anterior, que se baseava em um fluxo de ETL local. Embora o `process_data.py` contenha a lógica de limpeza que foi aplicada para gerar a tabela no BigQuery, eles **não são mais utilizados no fluxo de execução da aplicação Streamlit**. A análise e a visualização agora são feitas dinamicamente pela aplicação web.
+
+## 3. Dockerização da Aplicação
+
+Para facilitar o deploy e garantir um ambiente de execução consistente, a aplicação foi containerizada utilizando Docker.
+
+### 3.1. `Dockerfile`
+
+O `Dockerfile` define o ambiente da aplicação:
+
+- **Imagem Base:** Utiliza uma imagem Python 3.10-slim, que é leve e otimizada.
+- **Dependências:** Copia e instala as bibliotecas listadas no `requirements.txt`.
+- **Código da Aplicação:** Adiciona os scripts Python necessários para a execução.
+- **Exposição de Porta:** Expõe a porta 8501, padrão do Streamlit.
+- **Comando de Execução:** Inicia a aplicação com `streamlit run dashboard_agrofit.py`.
+
+### 3.2. `.dockerignore`
+
+Este arquivo garante que arquivos desnecessários (como o repositório `.git`, credenciais e arquivos de documentação) não sejam copiados para a imagem Docker, mantendo-a segura e enxuta.

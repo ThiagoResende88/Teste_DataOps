@@ -1,0 +1,8 @@
+.git
+.gitignore
+"Case Técnico - Estagiário de DevOps-DataOps.docx"
+__pycache__/
+*.pyc
+.contexto
+dashboard.txt
+README.md

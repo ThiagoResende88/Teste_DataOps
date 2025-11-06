@@ -121,3 +121,25 @@ Fatec-SP | 5º semestre de Desenvolvimento de Software Multiplataforma
 📧 Contato: thiagod.resende15@gmail.com
 
 📅 Última atualização: Novembro / 2025
+
+## 🐳 Executando com Docker
+
+Para facilitar a execução e o deploy, o projeto foi containerizado. Certifique-se de ter o Docker instalado e em execução.
+
+**1. Construa a imagem Docker:**
+
+```bash
+docker build -t agrofit-dashboard .
+```
+
+**2. Execute o container:**
+
+Substitua `</path/to/your/gcp_credentials.json>` pelo caminho absoluto do seu arquivo de credenciais.
+
+```bash
+docker run -p 8501:8501 -v </path/to/your/gcp_credentials.json>:/app/gcp_credentials.json agrofit-dashboard
+```
+
+**3. Acesse o dashboard:**
+
+Abra seu navegador e acesse: `http://localhost:8501`
